@@ -74,7 +74,8 @@ class ExpressionSpec extends SpecHelper {
         E(
           """
             |var i = 1
-            |while i < 10
+            |while i < 10 do
+            |begin
             |  i := i + 1
             |end
             |i
@@ -83,7 +84,8 @@ class ExpressionSpec extends SpecHelper {
         E(
           """
             |var i = 10
-            |while i >= 0
+            |while i >= 0 do
+            |begin
             |  i := i - 1
             |end
             |i
@@ -140,12 +142,12 @@ class ExpressionSpec extends SpecHelper {
         assertResult(
           E(
             """
-              |if true then1.0 else 2.0 end
+              |if true then 1.0 else 2.0 end
             """.stripMargin))(BoxedDouble(1.0))
         assertResult(
           E(
             """
-              |if false then1.0 else 2.0 end
+              |if false then 1.0 else 2.0 end
             """.stripMargin))(BoxedDouble(2.0))
       }
     }
@@ -155,19 +157,26 @@ class ExpressionSpec extends SpecHelper {
         assertResult(
           E(
             """
-              |function add(x, y) x + y end
+              |function add(x, y)
+              |begin
+              |  x + y
+              |end
               |add(2, 3)
             """.stripMargin))(BoxedInt(5))
         assertResult(
           E(
             """
-              |function fact(n) if n < 2 then1 else (n * fact(n - 1)) end end
+              |function fact(n)
+              |begin
+              |  if n < 2 then 1 else (n * fact(n - 1)) end
+              |end
               |fact(4)
             """.stripMargin))(BoxedInt(24))
         assertResult(
           E(
             """
               |function none()
+              |begin
               |  24
               |end
               |none()
@@ -176,6 +185,7 @@ class ExpressionSpec extends SpecHelper {
           E(
             """
               |function hello()
+              |begin
               |  "Hello"
               |  0
               |end
