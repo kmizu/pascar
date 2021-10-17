@@ -37,7 +37,7 @@ Usage: java -jar pascar.jar (-f <fileName> | -e <expression>)
 Write the folowing lines and save it to `hello.pascar`.
 
 ```pascal
-PrintLine("Hello, World!")
+writeln("Hello, World!")
 ```
 
 And run the interpreter by `java -jar pascar.jar hello.pascar`:
@@ -75,9 +75,9 @@ The syntax of if expression is like Pascal:
 
 ```pascal
 if i < 3 then
-  PrintLine("i < 3")
+  writeln("i < 3")
 else
-  PrintLine("i >= 3")
+  writeln("i >= 3")
 end
 ```
 
@@ -89,7 +89,7 @@ Thke syntax of while expression is like Pascal:
 var i = 0
 while i < 10
   i = i + 1
-  PrintLine(i)
+  writeln(i)
 end
 ```
 
@@ -163,7 +163,7 @@ var list2 = [
   4
   5
 ]
-PrintLine(list2)
+writeln(list2)
 var list3 = [[1 2 3]
              [4 5 6]
              [7 8 9]]

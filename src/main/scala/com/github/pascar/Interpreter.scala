@@ -120,12 +120,12 @@ class Interpreter extends Processor[TypedAst.Program, Value, InteractiveSession]
       UnitValue
     }
 
-    define("PrintLine") { case List(param) =>
+    define("writeln") { case List(param) =>
       println(param)
       param
     }
 
-    define("PrintLineError") { case List(param) =>
+    define("writelnError") { case List(param) =>
       Console.err.println(param)
       param
     }
