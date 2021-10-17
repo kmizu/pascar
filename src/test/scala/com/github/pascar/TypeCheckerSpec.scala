@@ -7,17 +7,17 @@ class TypeCheckerSpec extends SpecHelper {
   describe("assignment") {
     val expectations: List[(String, Value)] = List(
       """
-        |var a=1
+        |var a = 1
         |a
       """.stripMargin -> BoxedInt(1),
       """
-        |var a=1
-        |a = a + 1
+        |var a = 1
+        |a := a + 1
         |a
       """.stripMargin -> BoxedInt(2),
       """
         |var s="FOO"
-        |s=s+s
+        |s := s + s
         |s
       """.stripMargin -> ObjectValue("FOOFOO")
     )

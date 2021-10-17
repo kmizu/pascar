@@ -15,6 +15,8 @@ object Type {
 
   case class TVariable(name: String) extends Row(name)
 
+  case class TByReference(target: Type) extends Type(s"ref(${target})")
+
   case object TInt extends Type("Int")
 
   case object TShort extends Type("Short")

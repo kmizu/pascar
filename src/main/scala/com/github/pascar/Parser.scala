@@ -140,7 +140,9 @@ class Parser extends Processor[String, Program, InteractiveSession] {
       val FUNCTION: Parser[String] = kwToken("function")
       val PROCEDURE:      Parser[String] = kwToken("procedure")
       val VAR: Parser[String] = kwToken("var")
+      val CONST: Parser[String] = kwToken("const")
       val EQ: Parser[String] = kwToken("=")
+      val ASSIGN: Parser[String] = kwToken(":=")
       val RULE: Parser[String] = kwToken("rule")
       val BEGIN_MSTR: Parser[String] = kwToken("<<<")
       val END_MSTR: Parser[String] = kwToken(">>>")
@@ -257,7 +259,7 @@ class Parser extends Processor[String, Program, InteractiveSession] {
       }
 
       //line ::= expression | valDeclaration | functionDefinition | procedureDefinition
-      lazy val line: Parser[Ast.Node] = rule(variantDeclaration | expression | valDeclaration | functionDefinition | procedureDefinition)
+      lazy val line: Parser[Ast.Node] = rule(variantDeclaration | expression | varDeclaration | constDeclaration | functionDefinition | procedureDefinition)
 
       //expression ::= assignment | ternary | ifExpression | whileEpression | foreachExpression
       lazy val expression: Parser[Ast.Node] = rule(assignment | ternary | ifExpression | whileExpression)
@@ -318,7 +320,7 @@ class Parser extends Processor[String, Program, InteractiveSession] {
       //conditional ::= add {"==" add | "<=" add | "=>" add | "<" add | ">" add}
       lazy val conditional: Parser[Ast.Node] = rule {
         chainl(add)(
-          (%% << CL(EQEQ)) ^^ { location => (left: Ast.Node, right: Ast.Node) => BinaryExpression(location, Operator.EQUAL, left, right) } |
+          (%% << CL(EQ)) ^^ { location => (left: Ast.Node, right: Ast.Node) => BinaryExpression(location, Operator.EQUAL, left, right) } |
             (%% << CL(LTE)) ^^ { location => (left: Ast.Node, right: Ast.Node) => BinaryExpression(location, Operator.LESS_OR_EQUAL, left, right) } |
             (%% << CL(GTE)) ^^ { location => (left: Ast.Node, right: Ast.Node) => BinaryExpression(location, Operator.GREATER_EQUAL, left, right) } |
             (%% << CL(LT)) ^^ { location => (left: Ast.Node, right: Ast.Node) => BinaryExpression(location, Operator.LESS_THAN, left, right) } |
@@ -481,19 +483,20 @@ class Parser extends Processor[String, Program, InteractiveSession] {
         !KEYWORDS(n.substring(1))
       }.map { n => n.substring(1) }) << SPACING_WITHOUT_LF
 
-      lazy val assignment: Parser[Assignment] = rule(ident ~ CL(PLUSEQ | MINUSEQ | ASTEREQ | SLASHEQ | EQ) ~ expression ^^ {
-        case v ~ "=" ~ value => SimpleAssignment(v.location, v.name, value)
-        case v ~ "+=" ~ value => PlusAssignment(v.location, v.name, value)
-        case v ~ "-=" ~ value => MinusAssignment(v.location, v.name, value)
-        case v ~ "*=" ~ value => MultiplicationAssignment(v.location, v.name, value)
-        case v ~ "/=" ~ value => DivisionAssignment(v.location, v.name, value)
+      lazy val assignment: Parser[Assignment] = rule(ident ~ CL(ASSIGN) ~ expression ^^ {
+        case v ~ ":=" ~ value => SimpleAssignment(v.location, v.name, value)
         case _ ~ op ~ _ => sys.error(s"unknown assignment operator ${op}")
       })
 
-      // valDeclaration ::= "var" ident "=" expression
-      lazy val valDeclaration: Parser[ValDeclaration] = rule((%% << VAR) ~ commit(ident ~ (typeAnnotation.? << CL(EQ)) ~ expression) ^^ {
-        case location ~ (valName ~ optionalType ~ value) => ValDeclaration(location, valName.name, optionalType, value, false)
+      // valDeclaration ::= "var" ident [":" type] "=" expression
+      lazy val varDeclaration: Parser[ValDeclaration] = rule((%% << VAR) ~ commit(ident ~ (typeAnnotation.? << CL(EQ)) ~ expression) ^^ {
+        case location ~ (valName ~ optionalType ~ value) => ValDeclaration(location, valName.name, optionalType, value, immutable = false)
       })
+
+      // constDeclaration ::= "const" ident "=" expression
+      lazy val constDeclaration: Parser[ValDeclaration] = rule((%% << CONST) ~ commit(ident << CL(EQ)) ~ expression) ^^ {
+        case location ~ valName ~ value => ValDeclaration(location, valName.name, None, value, immutable = true)
+      }
 
       // parenthesizedParameter ::= "(" [param {"," param}] ")"
       lazy val parenthesizedParameter: Parser[List[Ast.Node]] = rule {

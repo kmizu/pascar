@@ -4,49 +4,67 @@ package com.github.pascar
   * Created by Mizushima on 2016/05/30.
   */
 class ExpressionSpec extends SpecHelper {
+  describe("constant") {
+    it("is evaluated correctly") {
+      assertResult(
+        E("""
+          |const a = 1 + 3
+          |4
+          |""".stripMargin)
+      )(BoxedInt(4))
+    }
+    it("cannot change its value") {
+      intercept[TyperException]{
+        E("""
+            |const a = 1 + 3
+            |a := a + 1
+            |""".stripMargin)
+      }
+    }
+  }
   describe("assignment") {
     it("is evaluated correctly") {
       assertResult(
         E(
           """
-            |var a=1
+            |var a = 1
             |a
           """.stripMargin))(BoxedInt(1))
       assertResult(
         E(
           """
-            |var a=1
-            |a = a + 1
+            |var a = 1
+            |a := a + 1
             |a
           """.stripMargin))(BoxedInt(2))
       assertResult(
         E(
           """
-            |var a=1
-            |a += 1
+            |var a = 1
+            |a := a + 1
             |a
           """.stripMargin))(BoxedInt(2))
       assertResult(
         E(
           """
-            |var a=1
-            |a -= 1
+            |var a = 1
+            |a := a - 1
             |a
           """.stripMargin))(BoxedInt(0))
       assertResult(
         E(
           """
-            |var a=3
-            |a *= 2
+            |var a = 3
+            |a := a - 2
             |a
-          """.stripMargin))(BoxedInt(6))
+          """.stripMargin))(BoxedInt(1))
       assertResult(
         E(
           """
-            |var a=5
-            |a /= 2
+            |var a = 5
+            |a := a - 2
             |a
-          """.stripMargin))(BoxedInt(2))
+          """.stripMargin))(BoxedInt(3))
     }
   }
 
@@ -57,7 +75,7 @@ class ExpressionSpec extends SpecHelper {
           """
             |var i = 1
             |while i < 10
-            |  i = i + 1
+            |  i := i + 1
             |end
             |i
           """.stripMargin))(BoxedInt(10))
@@ -66,7 +84,7 @@ class ExpressionSpec extends SpecHelper {
           """
             |var i = 10
             |while i >= 0
-            |  i = i - 1
+            |  i := i - 1
             |end
             |i
           """.stripMargin))(BoxedInt(-1))
@@ -99,8 +117,8 @@ class ExpressionSpec extends SpecHelper {
           """.stripMargin))(BoxedBoolean(false))
       var input =
         """
-            |var i = -1
-            |i < 0 || i > 10
+          |var i = -1
+          |i < 0 || i > 10
         """.stripMargin
       assertResult(
         E(input)

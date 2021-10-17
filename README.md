@@ -52,16 +52,25 @@ Hello, World!
 
 ### Variable Declaration
 
-```vb
+```pascal
 var one = 1
 ```
 
 Declare variable `one` and `one` is bound to `1`.  You can omit
 semicolon(`;`) at the last of the declaration:
 
-```vb
+```pascal
 var name = expression [;]
 ```
+
+### Constant Declaration
+
+```pascal
+const name = expression [;]
+```
+
+Declared constant 'one_immutable' is bound to '2'. You can omit
+semicolo (`:`) at the last of the declarat ion:
 
 You can use type annotaion as you like:
 
@@ -88,7 +97,7 @@ Thke syntax of while expression is like Pascal:
 ```pascal
 var i = 0
 while i < 10
-  i = i + 1
+  i := i + 1
   writeln(i)
 end
 ```
@@ -174,7 +183,7 @@ The type of list literal is a instance of special type constructor `List<'a>`.
 ### Map Literal
 
 ```
-var map = %["A": 1, "B": 2]
+const map = %["A": 1, "B": 2]
 map Map#get "A" // => 1
 map Map#get "B" // => 2
 map Map#get "C" // => null
@@ -184,7 +193,7 @@ A map literal can be expressed as the form `%[k1:v1, ..., kn:vn]` (`kn` and `vn`
 separator characters also include line feeds and spaces in Klassic unlike other programmign languages:
 
 ```
-var map2 = %[
+const map2 = %[
   "A" : 1
   "b" : 2
 ]
@@ -198,15 +207,15 @@ A map literal can be expressed as the form `%(v1, ..., vn)` (`vn` are expression
 separator characters also include line feeds and spaces in Klassic unlike other programmign languages:
 
 ```
-var set1 = %(1, 2, 3)
+const set1 = %(1, 2, 3)
 ```
 
 ```
-var set2 = %(1 2 3) // space is omitted
+const set2 = %(1 2 3) // space is omitted
 ```
 
 ```
-var set3 = %(
+const set3 = %(
   1
   2
   3

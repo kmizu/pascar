@@ -2,7 +2,7 @@ procedure Main()
   var i : Integer = 0
   while i < 3
     writeln(i)
-    i = i + 1
+    i := i + 1
   end
 End Sub
 Main()
