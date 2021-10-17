@@ -1,4 +1,5 @@
 record Player
+begin
   x : Int
   y : Int
   name : String
@@ -7,6 +8,7 @@ record Player
 end
 
 record Enemy
+begin
   x : Int
   y : Int
   name : String
@@ -14,6 +16,7 @@ record Enemy
 end
 
 function distance(p, e)
+begin
   var dx = abs(double(p.x - e.x))
   var dy = abs(double(p.y - e.y))
   sqrt(dx * dx + dy * dy)

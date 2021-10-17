@@ -1,22 +1,26 @@
 record P
+begin
   x : Int
   y : Int
   z : Int
 end
 
 record Q
+begin
   x : Double
   y : Double
   z : Double
 end
 
 record T <'a, 'b>
+begin
   x : 'a
   y : 'b
 end
 
 function add_xy(o)
+begin
   o.x + o.y
 end
-assert(3 == add_xy(#P(1, 2, 3)))
-assert(3 == add_xy(#T(1, 2)))
+assert(3 = add_xy(#P(1, 2, 3)))
+assert(3 = add_xy(#T(1, 2)))

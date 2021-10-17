@@ -1,6 +1,11 @@
 function myFoldLeft(list)
+begin
   (z) => (f) => {
-    if isEmpty(list) then z Else myFoldLeft(tail(list))(f(z, head(list)))(f) end
+    if isEmpty(list) then
+      z
+    else
+      myFoldLeft(tail(list))(f(z, head(list)))(f)
+    end
   }
 end
 

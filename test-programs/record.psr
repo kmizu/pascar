@@ -1,37 +1,45 @@
 record Person
+begin
   name : *
   age : Int
   profile : #Profile
 end
 
 record Profile
+begin
   description : *
   hobby : *
 end
 
 record Stub
+begin
   p : #GPoint<Int, Int>
 end
 
 record X1
+begin
   x2 : #X2
 end
 
 record X2
+begin
   g : #GPoint<Int, Int>
 end
 
 record S
+begin
   v : Int
   to_string : (*) => *
 end
 
 record GPoint<'x, 'y>
+begin
   x : 'x
   y : 'y
 end
 
 record Pair <'a, 'b>
+begin
   _1 : 'a
   _2 : 'b
 end
@@ -40,7 +48,7 @@ var s = #S(100, (this) => {
   "#{(this : #S).v}"
 })
 
-assert("100" == s.to_string())
+assert("100" = s.to_string())
 
 var stub = #Stub(#GPoint(3, 5))
 assertResult(3)(stub.p.x)

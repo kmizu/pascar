@@ -1,4 +1,4 @@
 writeln(true)
 writeln(false)
 
-assertResult(1)(if true then 1 Else 0 end)
+assertResult(1)(if true then 1 else 0 end)

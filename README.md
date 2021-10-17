@@ -96,7 +96,8 @@ Thke syntax of while expression is like Pascal:
 
 ```pascal
 var i = 0
-while i < 10
+while i < 10 do
+begin
   i := i + 1
   writeln(i)
 end
@@ -321,6 +322,7 @@ Pascar's type inference is based on HM.  It means that type annotations is not r
 
 ```
 function fold_left(list) 
+begin
   (z) => (f) => {
     If isEmpty(list) Then z Else fold_left(tail(list))(f(z, head(list)))(f) End If
   }
@@ -334,6 +336,7 @@ Pascar has simple object system based on row polymorphism.  For example,
 
 ```
 function add(o)
+begin
   o.x + o.y
 end
 ```

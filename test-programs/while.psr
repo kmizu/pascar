@@ -1,8 +1,10 @@
-procedure Main()
+procedure main()
+begin
   var i : Integer = 0
-  while i < 3
+  while i < 3 do
+  begin
     writeln(i)
     i := i + 1
   end
-End Sub
-Main()
+end
+main()
