@@ -1,0 +1,12 @@
+var count = 0
+
+var add = (x, y) => {
+  count = count + 1
+  x + y
+}
+
+var num1 = add(1, 2)
+assertResult(1)(count)
+
+var num2 = add(1, 2)
+assertResult(2)(count)

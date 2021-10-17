@@ -1,0 +1,24 @@
+record Player
+  x : Int
+  y : Int
+  name : String
+  hp : Int
+  wp : Int
+end
+
+record Enemy
+  x : Int
+  y : Int
+  name : String
+  hp : Int
+end
+
+function distance(p, e)
+  var dx = abs(double(p.x - e.x))
+  var dy = abs(double(p.y - e.y))
+  sqrt(dx * dx + dy * dy)
+end
+
+var p = #Player(4, 6, "Hero", 50, 10)
+var e = #Enemy(1, 2, "Slime", 5)
+assertResult(5.0)(distance(p, e))
