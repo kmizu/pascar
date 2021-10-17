@@ -1,4 +1,4 @@
-PrintLine(true)
-PrintLine(false)
+writeln(true)
+writeln(false)
 
 assertResult(1)(if true then 1 Else 0 end)

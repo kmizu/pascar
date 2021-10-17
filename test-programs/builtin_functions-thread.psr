@@ -1,5 +1,5 @@
 thread(() => {
     sleep(1000)
-    PrintLine("Hello from another thread.")
+    writeln("Hello from another thread.")
 })
-PrintLine("Hello from main thread.")
+writeln("Hello from main thread.")
