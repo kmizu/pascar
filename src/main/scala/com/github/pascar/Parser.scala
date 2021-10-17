@@ -231,6 +231,7 @@ class Parser extends Processor[String, Program, InteractiveSession] {
           _ <- RECORD
           name <- commit(sident)
           ts <- commit((CL(LT) >> typeVariable.repeat1By(CL(COMMA)) << CL(GT)).? << TERMINATOR.?)
+          _ <- commit(BEGIN << TERMINATOR.?)
           members <- commit(((sident ~ CL(typeAnnotation << SEMICOLON.?)) ^^ { case n ~ t => (n, t) }).*)
           _ <- commit(END)
         } yield RecordDeclaration(location, name, ts.getOrElse(Nil), members)
@@ -574,7 +575,7 @@ class Parser extends Processor[String, Program, InteractiveSession] {
 
       // subRoutineDefinition ::= "procedure" ident  ["(" [param {"," param}] ")"] "=" expression
       lazy val procedureDefinition: Parser[FunctionDefinition] = rule {
-        (%% << CL(PROCEDURE)) ~ commit(ident ~ (CL(LPAREN) >> (ident ~ typeAnnotation.?).repeat0By(CL(COMMA)) << CL(RPAREN)).? ~ lines) << END ^^ {
+        (%% << CL(PROCEDURE)) ~ commit(ident ~ (CL(LPAREN) >> (ident ~ typeAnnotation.?).repeat0By(CL(COMMA)) << CL(RPAREN)).? ~ (BEGIN >> lines)) << END ^^ {
           case location ~ (functionName ~ params ~ body) =>
             val ps = params match {
               case Some(xs) =>

@@ -9,6 +9,7 @@ class RecordSpec extends SpecHelper {
     val expectations: List[(String, Value)] = List(
       """
         |record Person
+        |begin
         |  name : *
         |  age : Int
         |end
@@ -16,6 +17,7 @@ class RecordSpec extends SpecHelper {
       """.stripMargin -> RecordValue("Person", List("name" -> ObjectValue("Hoge"), "age" -> BoxedInt(7))),
       """
         |record Tuple<'a, 'b>
+        |begin
         |  _1 : 'a
         |  _2 : 'b
         |end
@@ -34,6 +36,7 @@ class RecordSpec extends SpecHelper {
     val expectations: List[(String, Value)] = List(
       """
         |record Person
+        |begin
         |  name : *
         |  age : Int
         |end
@@ -42,6 +45,7 @@ class RecordSpec extends SpecHelper {
       """.stripMargin -> ObjectValue("Hoge"),
       """
         |record Tuple<'a, 'b>
+        |begin
         |  _1 : 'a
         |  _2 : 'b
         |end
@@ -60,6 +64,7 @@ class RecordSpec extends SpecHelper {
       E {
         """
           | record Person
+          | begin
           |   name : *
           |   age : Int
           | end
@@ -71,6 +76,7 @@ class RecordSpec extends SpecHelper {
       E {
         """
           | record Tuple<'a, 'b>
+          | begin
           |   _1 : 'a
           |   _2 : 'b
           | end

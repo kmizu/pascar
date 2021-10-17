@@ -1,7 +1,7 @@
 var count = 0
 
 var add = (x, y) => {
-  count = count + 1
+  count := count + 1
   x + y
 }
 
