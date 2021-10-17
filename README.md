@@ -129,6 +129,7 @@ Instead, you can use the notation for recursive functions:
 
 ```pascal
 function fact(n)
+begin
   if n < 2 then 
     1 
   else 
@@ -147,7 +148,7 @@ fact(5) // 120
 ### Function Invocation
 
 ```pascal
-var add = (x, y) => x + y
+const add = (x, y) => x + y
 println(add(1, 2))
 ```
 
@@ -156,26 +157,26 @@ result of `fun` must be a function object.
 
 ### List Literal
 
-```vb
-var list1 = [1, 2, 3, 4, 5]
-println(list1)
+```pascal
+const list = [1, 2, 3, 4, 5]
+println(list)
 ```
 
 A list literal can be expressed as the form `[e1, e2, ...,en]`.  Note that
 separator characters have also line feeds and spaces in Klassic unlike other programming languages.
 
 ```
-var list2 = [
+const list = [
   1
   2
   3
   4
   5
 ]
-writeln(list2)
-var list3 = [[1 2 3]
-             [4 5 6]
-             [7 8 9]]
+writeln(list)
+var list = [[1 2 3]
+            [4 5 6]
+            [7 8 9]]
 ```
 
 The type of list literal is a instance of special type constructor `List<'a>`.

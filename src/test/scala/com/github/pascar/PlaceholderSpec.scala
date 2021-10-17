@@ -63,6 +63,7 @@ class PlaceholderSpec extends TestSuiteHelper {
     val result = E(
       """
         |function f(x)
+        |begin
         |  _
         |end
         |map([1])(f(1))

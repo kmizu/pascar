@@ -124,10 +124,12 @@ class Parser extends Processor[String, Program, InteractiveSession] {
       val SHARP: Parser[String] = kwToken("#")
       val IF: Parser[String] = kwToken("if")
       val AS: Parser[String] = kwToken(":")
+      val BEGIN: Parser[String] = kwToken("begin")
       val END: Parser[String] = kwToken("end")
       val ELSE: Parser[String] = kwToken("else")
       val THEN: Parser[String] = kwToken("then")
       val WHILE: Parser[String] = kwToken("while")
+      val DO: Parser[String] = kwToken("do")
       val IMPORT: Parser[String] = kwToken("import")
       val ENUM: Parser[String] = kwToken("enum")
       val TRUE: Parser[String] = kwToken("true")
@@ -273,7 +275,7 @@ class Parser extends Processor[String, Program, InteractiveSession] {
 
       //whileExpression ::= "while" expression  expression "end"
       lazy val whileExpression: Parser[Ast.Node] = rule {
-        (%% << CL(WHILE)) ~ commit(expression ~ (TERMINATOR >> lines) << END) ^^ {
+        (%% << CL(WHILE)) ~ commit(expression ~< DO ~ (TERMINATOR >> BEGIN >> lines) << END) ^^ {
           case location ~ (condition ~ body) => WhileExpression(location, condition, body)
         }
       }
@@ -552,7 +554,7 @@ class Parser extends Processor[String, Program, InteractiveSession] {
 
       // functionDefinition ::= "Function" ident  ["(" [param {"," param}] ")"] "=" expression
       lazy val functionDefinition: Parser[FunctionDefinition] = rule {
-        (%% << CL(FUNCTION)) ~ commit(ident ~ (CL(LPAREN) >> (ident ~ typeAnnotation.?).repeat0By(CL(COMMA)) << CL(RPAREN)).? ~ typeAnnotation.? ~ lines) << END ^^ {
+        (%% << CL(FUNCTION)) ~ commit(ident ~ (CL(LPAREN) >> (ident ~ typeAnnotation.?).repeat0By(CL(COMMA)) << CL(RPAREN)).? ~ CL(typeAnnotation.?) ~ (BEGIN >> lines)) << END ^^ {
           case location ~ (functionName ~ params ~ optioinalType ~ body) =>
             val ps = params match {
               case Some(xs) =>

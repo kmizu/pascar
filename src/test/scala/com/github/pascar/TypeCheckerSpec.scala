@@ -33,6 +33,7 @@ class TypeCheckerSpec extends SpecHelper {
     val expectations: List[(String, Value)] = List(
       """
         |function add(x : Int, y : Int) : Int
+        |begin
         |  x + y
         |end
         |var f : (Int, Int) => Int = add
@@ -71,7 +72,10 @@ class TypeCheckerSpec extends SpecHelper {
   describe("function type doesn't match ") {
     val illTypedPrograms: List[String] = List(
       """
-        |function f(x, y) x + y end
+        |function f(x, y)
+        |begin
+        |  x + y
+        |end
         |f(10)
       """.stripMargin
     )

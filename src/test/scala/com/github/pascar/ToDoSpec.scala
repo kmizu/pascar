@@ -9,6 +9,7 @@ class ToDoSpec extends SpecHelper {
         E(
           """
             |function fact(n)
+            |begin
             |  if n < 2 then
             |    ToDo()
             |  else
