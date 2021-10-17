@@ -1,0 +1,12 @@
+var set1 = %(1, 2, 3)
+PrintLine(set1)
+
+var set2 = %(1 2 3)
+PrintLine(set2)
+
+var set3 = %(
+    1
+    2
+    3
+)
+PrintLine(set3)

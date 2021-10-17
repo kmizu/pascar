@@ -1,0 +1,8 @@
+procedure Main()
+  var i : Integer = 0
+  while i < 3
+    PrintLine(i)
+    i = i + 1
+  end
+End Sub
+Main()

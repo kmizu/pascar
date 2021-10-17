@@ -1,0 +1,38 @@
+// Byte
+PrintLine(100BY)
+PrintLine(127BY)
+PrintLine((-127BY)-1BY)
+
+// Short
+PrintLine(100S)
+PrintLine(200S)
+PrintLine(300S)
+PrintLine(32767S)
+PrintLine((-32767S)-1S)
+
+// Int
+PrintLine(2147483647)
+PrintLine((-2147483647)-1)
+
+// Long
+PrintLine(100L)
+PrintLine(200L)
+PrintLine(300L)
+PrintLine(9223372036854775807L)
+PrintLine((-9223372036854775807L)-1L)
+
+// Double
+PrintLine(1.0)
+PrintLine(1.5)
+/* E notation is not supported?
+PrintLine(1.7976931348623157E308)
+PrintLine(-1.7976931348623157E308)
+*/
+
+// Float
+PrintLine(1.0F)
+PrintLine(1.5F)
+/* E notation is not supported?
+PrintLine(3.4028235E38)
+PrintLine(-3.4028235E38)
+*/

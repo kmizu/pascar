@@ -1,0 +1,4 @@
+PrintLine(true)
+PrintLine(false)
+
+assertResult(1)(if true then 1 Else 0 end)
