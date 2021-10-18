@@ -45,10 +45,10 @@ begin
 end
 
 var s = #S(100, (this) => {
-  "#{(this : #S).v}"
+  '#{(this as #S).v}'
 })
 
-assert("100" = s.to_string())
+assert('100' = s.to_string())
 
 var stub = #Stub(#GPoint(3, 5))
 assertResult(3)(stub.p.x)
@@ -62,11 +62,11 @@ var point = #Point(1000, 2000)
 assertResult(1000)(point.x)
 assertResult(2000)(point.y)
 
-var person = #Person("Kota Mizushima", 33, #Profile("Software Engineer", "Programming, Running, and Video Games"))
-assertResult("Kota Mizushima")(person.name)
+var person = #Person('Kota Mizushima', 33, #Profile('Software Engineer', 'Programming, Running, and Video Games'))
+assertResult('Kota Mizushima')(person.name)
 assertResult(33)(person.age)
-assertResult("Software Engineer")(person.profile.description)
-assertResult("Programming, Running, and Video Games")(person.profile.hobby)
+assertResult('Software Engineer')(person.profile.description)
+assertResult('Programming, Running, and Video Games')(person.profile.hobby)
 
 var pair1 : #Pair<Int, Int> = #Pair(1, 2)
 assertResult(1)(pair1._1)

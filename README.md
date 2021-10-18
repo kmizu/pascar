@@ -37,7 +37,7 @@ Usage: java -jar pascar.jar (-f <fileName> | -e <expression>)
 Write the folowing lines and save it to `hello.pascar`.
 
 ```pascal
-writeln("Hello, World!")
+writeln('Hello, World!')
 ```
 
 And run the interpreter by `java -jar pascar.jar hello.pascar`:
@@ -75,7 +75,7 @@ semicolo (`:`) at the last of the declarat ion:
 You can use type annotaion as you like:
 
 ```pascal
-var name: String = "FOO"
+var name: String = 'FOO'
 ```
 
 ### If Expression
@@ -84,9 +84,9 @@ The syntax of if expression is like Pascal:
 
 ```pascal
 if i < 3 then
-  writeln("i < 3")
+  writeln('i < 3')
 else
-  writeln("i >= 3")
+  writeln('i >= 3')
 end
 ```
 
@@ -115,8 +115,8 @@ the following:
 
 ```
 var printAndAdd = (x, y) => {
-  println(x)
-  println(y)
+  writeln(x)
+  writeln(y)
   x + y
 }
 ```
@@ -150,7 +150,7 @@ fact(5) // 120
 
 ```pascal
 const add = (x, y) => x + y
-println(add(1, 2))
+writeln(add(1, 2))
 ```
 
 A function can be invoked as the form `fun(p1, p2, ..., pn)`.  The evaluation
@@ -160,7 +160,7 @@ result of `fun` must be a function object.
 
 ```pascal
 const list = [1, 2, 3, 4, 5]
-println(list)
+writeln(list)
 ```
 
 A list literal can be expressed as the form `[e1, e2, ...,en]`.  Note that
@@ -185,10 +185,10 @@ The type of list literal is a instance of special type constructor `List<'a>`.
 ### Map Literal
 
 ```
-const map = %["A": 1, "B": 2]
-map Map#get "A" // => 1
-map Map#get "B" // => 2
-map Map#get "C" // => null
+const map = %['A': 1, 'B': 2]
+map Map#get 'A' // => 1
+map Map#get 'B' // => 2
+map Map#get 'C' // => null
 ```
 
 A map literal can be expressed as the form `%[k1:v1, ..., kn:vn]` (`kn` and `vn` are expressions).  Note that
@@ -196,8 +196,8 @@ separator characters also include line feeds and spaces in Klassic unlike other 
 
 ```
 const map2 = %[
-  "A" : 1
-  "b" : 2
+  'A' : 1
+  'b' : 2
 ]
 ```
 
@@ -233,9 +233,9 @@ Pascar supports various literal.  The followings are explanations:
 ### Int
 
 ```
-println(100)
-println(200)
-println(300)
+writeln(100)
+writeln(200)
+writeln(300)
 ```
 
 The max value of Int literals is `Int.MaxValue` in Scala and the min value of integer literals is 
@@ -247,9 +247,9 @@ The suffix of byte literal is `BY`.  The max value of long literals is `Byte.Max
 the min value of long literals is `Byte.MinValue` in Scala.
 
 ```
-println(127BY)
-println(-127BY)
-println(100BY)
+writeln(127BY)
+writeln(-127BY)
+writeln(100BY)
 ```
 
 ### Short
@@ -258,17 +258,17 @@ The suffix of short literal is `S`.  The max value of long literals is `Short.Ma
 the min value of long literals is `Short.MinValue` in Scala.
 
 ```
-println(100S)
-println(200S)
-println(300S)
+writeln(100S)
+writeln(200S)
+writeln(300S)
 ```
 
 ### Long
 
 ```
-println(100L)
-println(200L)
-println(300L)
+writeln(100L)
+writeln(200L)
+writeln(300L)
 ```
 
 The suffix of long literal is `L`.  The max value of long literals is `Long.MaxValue` in Scala and 
@@ -277,8 +277,8 @@ the min value of long literals is `Long.MinValue` in Scala.
 ### Double
 
 ```
-println(1.0)
-println(1.5)
+writeln(1.0)
+writeln(1.5)
 ```
 
 The max value of double literal is `Double.MaxValue` in Scala and the min value of double literal is `Double.MinValue`
@@ -287,8 +287,8 @@ in Scala.
 ### Float
 
 ```
-println(1.0F)
-println(1.5F)
+writeln(1.0F)
+writeln(1.5F)
 ```
 
 The max value of float literal is `Float.MaxValue` in Scala and the min value of float literal is `Float.MinValue`
@@ -366,10 +366,10 @@ Pascar supports some kind of built-in functions.
 
 ### Standard output Functions
 
-- `println: (param:Any) => Any`  
+- `writeln: (param:Any) => Any`  
     display the `param` into the standard output.  
     ```
-    println("Hello, World!")
+    writeln('Hello, World!')
     ```
 
 ### String Functions
@@ -377,21 +377,21 @@ Pascar supports some kind of built-in functions.
 - `substring: (s:String, begin:Int, end:Int) => String`  
     Returns a substring of the String `s`. The substring begins at the index `begin` and ends at the index `end` - 1.  
     ```
-    substring("FOO", 0, 1) // => "F"
+    substring('FOO', 0, 1) // => 'F'
     ```
 
 - `at: (s:String, index:Int) => String`  
     Returns a String with a character value at the index `index` of the String `s`.  
     ```
-    at("BAR", 2) // => "R"
+    at('BAR', 2) // => 'R'
     ```
 
 - `matches: (s:String, regex:String) => Boolean`  
     Returns true if the String `s` matches the regular expression `regex`, false otherwise.  
     ```
-    val pattern = "[0-9]+"
-    matches("199", pattern) // => true
-    matches("a", pattern)   // => false
+    val pattern = '[0-9]+'
+    matches('199', pattern) // => true
+    matches('a', pattern)   // => false
     ```
 
 ### Numeric Functions
@@ -492,11 +492,11 @@ Pascar supports some kind of built-in functions.
     ```
     thread(() => {
       sleep(1000)
-      println("Hello from another thread.")
+      writeln('Hello from another thread.')
     })
-    println("Hello from main thread.")
-    // => "Hello from main thread."
-    // => "Hello from another thread."
+    writeln('Hello from main thread.')
+    // => 'Hello from main thread.'
+    // => 'Hello from another thread.'
     ```
 
 - `sleep: (millis:Int) => Unit`  
@@ -512,9 +512,9 @@ Pascar supports some kind of built-in functions.
     ```
     val time = stopwatch( => {
       sleep(1000)
-      println("1")
+      writeln('1')
     })
-    println("it took #{time} milli seconds")
+    writeln('it took #{time} milli seconds')
     ```
 
 - `ToDo: () => Unit`  
@@ -547,17 +547,17 @@ Pascar supports some kind of built-in functions.
 - `url: (value:String) => java.net.URL`  
     Creates new `java.net.URL` object from a String `value`.
     ```
-    url("https://github.com/pascar/pascar")
+    url('https://github.com/pascar/pascar')
     ```
 
 - `uri: (value:String) => java.net.URI`  
     Creates new `java.net.URI` object from a String `value`.
     ```
-    uri("https://github.com/pascar/pascar")
+    uri('https://github.com/pascar/pascar')
     ```
 
 - `desktop: () => java.awt.Desktop`  
     Returns the Desktop instance of the current browser context via Java Desktop API.
     ```
-    desktop()->browse(uri("https://github.com/pascar/pascar"))
+    desktop()->browse(uri('https://github.com/pascar/pascar'))
     ```

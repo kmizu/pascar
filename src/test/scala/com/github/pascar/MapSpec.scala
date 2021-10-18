@@ -4,13 +4,13 @@ class MapSpec extends SpecHelper {
   describe("containsKey") {
     val expectations: List[(String, Value)] = List(
       """
-        |%["name": "Kota Mizushima" "age": "33"] Map#containsKey "name"
+        |%['name': 'Kota Mizushima' 'age': '33'] Map#containsKey 'name'
       """.stripMargin -> BoxedBoolean(true),
       """
-        |%["name": "Kota Mizushima" "age": "33"] Map#containsKey "age"
+        |%['name': 'Kota Mizushima' 'age': '33'] Map#containsKey 'age'
       """.stripMargin -> BoxedBoolean(true),
       """
-        |%["name": "Kota Mizushima" "age": "33"] Map#containsKey "hoge"
+        |%['name': 'Kota Mizushima' 'age': '33'] Map#containsKey 'hoge'
       """.stripMargin -> BoxedBoolean(false)
     )
 
@@ -24,13 +24,13 @@ class MapSpec extends SpecHelper {
   describe("containsValue") {
     val expectations: List[(String, Value)] = List(
       """
-        |%["name": "Kota Mizushima" "age": "33"] Map#containsValue "33"
+        |%['name': 'Kota Mizushima' 'age': '33'] Map#containsValue '33'
       """.stripMargin -> BoxedBoolean(true),
       """
-        |%["name": "Kota Mizushima" "age": "33"] Map#containsValue "Kota Mizushima"
+        |%['name': 'Kota Mizushima' 'age': '33'] Map#containsValue 'Kota Mizushima'
       """.stripMargin -> BoxedBoolean(true),
       """
-        |%["name": "Kota Mizushima" "age": "33"] Map#containsValue "hoge"
+        |%['name': 'Kota Mizushima' 'age': '33'] Map#containsValue 'hoge'
       """.stripMargin -> BoxedBoolean(false)
     )
     expectations.zipWithIndex.foreach{ case ((in, expected), i) =>
@@ -43,13 +43,13 @@ class MapSpec extends SpecHelper {
   describe("get") {
     val expectations: List[(String, Value)] = List(
       """
-        |%["name": "Kota Mizushima" "age": "33"] Map#get "age"
+        |%['name': 'Kota Mizushima' 'age': '33'] Map#get 'age'
       """.stripMargin -> ObjectValue("33"),
       """
-        |%["name": "Kota Mizushima" "age": "33"] Map#get "name"
+        |%['name': 'Kota Mizushima' 'age': '33'] Map#get 'name'
       """.stripMargin -> ObjectValue("Kota Mizushima"),
       """
-        |%["name": "Kota Mizushima" "age": "33"] Map#get "hoge"
+        |%['name': 'Kota Mizushima' 'age': '33'] Map#get 'hoge'
       """.stripMargin -> ObjectValue(null)
     )
     expectations.zipWithIndex.foreach{ case ((in, expected), i) =>
@@ -67,7 +67,7 @@ class MapSpec extends SpecHelper {
     )
     expect("non empty map should not be isEmpty")(
       """
-        |Map#isEmpty(%["x": 1 "y": 2])
+        |Map#isEmpty(%['x': 1 'y': 2])
       """.stripMargin -> BoxedBoolean(false)
     )
   }

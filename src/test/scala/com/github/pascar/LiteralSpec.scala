@@ -83,13 +83,13 @@ class LiteralSpec extends SpecHelper {
 
   describe("string literal with escape sequence") {
     val expectations = List[(String, Value)](
-      """"\r\n"""" -> ObjectValue("\r\n"),
-      """"\r"""" -> ObjectValue("\r"),
-      """"\n"""" -> ObjectValue("\n"),
-      """"\t"""" -> ObjectValue("\t"),
-      """"\b"""" -> ObjectValue("\b"),
-      """"\f"""" -> ObjectValue("\f"),
-      """"\\"""" -> ObjectValue("\\")
+      "'\\r\\n'" -> ObjectValue("\r\n"),
+      "'\\r'" -> ObjectValue("\r"),
+      "'\\n'" -> ObjectValue("\n"),
+      "'\\t'" -> ObjectValue("\t"),
+      "'\\b'" -> ObjectValue("\b"),
+      "'\\f'" -> ObjectValue("\f"),
+      "'\\\\'" -> ObjectValue("\\")
     )
     expectations.zipWithIndex.foreach{ case ((in, expected), i) =>
       it(s"${in} evaluates to ${expected}") {
@@ -101,7 +101,7 @@ class LiteralSpec extends SpecHelper {
     val expectations = List[(String, Value)](
       "[]" -> ObjectValue(listOf[Any]()),
       "[1]" -> ObjectValue(listOf(1)),
-      """["a"]""" -> ObjectValue(listOf("a")),
+      "['a']" -> ObjectValue(listOf("a")),
       "[1, 2]" -> ObjectValue(listOf(1, 2)),
       """|[1
         | 2]
@@ -143,10 +143,10 @@ class LiteralSpec extends SpecHelper {
     val expectations = List[(String, Value)](
       "%[]" -> ObjectValue(mapOf[String, String]()),
       "%[1 : 2]" -> ObjectValue(mapOf(1 -> 2)),
-      """%["a":"b"]""" -> ObjectValue(mapOf("a" -> "b")),
-      """%["a":"b" "c":"d"]""" -> ObjectValue(mapOf("a" -> "b", "c" -> "d")),
-    """%["a":"b"
-      | "c":"d"]""".stripMargin -> ObjectValue(mapOf("a" -> "b", "c" -> "d"))
+      "%['a' : 'b']" -> ObjectValue(mapOf("a" -> "b")),
+      "%['a' : 'b' 'c' : 'd']" -> ObjectValue(mapOf("a" -> "b", "c" -> "d")),
+      """|%['a' : 'b'
+         |  'c' : 'd']""".stripMargin -> ObjectValue(mapOf("a" -> "b", "c" -> "d"))
     )
     expectations.zipWithIndex.foreach { case ((in, expected), i) =>
       it(s"${in} evaluates to ${expected}") {

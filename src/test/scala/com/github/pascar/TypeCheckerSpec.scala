@@ -16,7 +16,7 @@ class TypeCheckerSpec extends SpecHelper {
         |a
       """.stripMargin -> BoxedInt(2),
       """
-        |var s="FOO"
+        |var s = 'FOO'
         |s := s + s
         |s
       """.stripMargin -> ObjectValue("FOOFOO")

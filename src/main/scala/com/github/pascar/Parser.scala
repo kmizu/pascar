@@ -123,7 +123,7 @@ class Parser extends Processor[String, Program, InteractiveSession] {
       val RBRACKET: Parser[String] = kwToken("]")
       val SHARP: Parser[String] = kwToken("#")
       val IF: Parser[String] = kwToken("if")
-      val AS: Parser[String] = kwToken(":")
+      val AS: Parser[String] = kwToken("as")
       val BEGIN: Parser[String] = kwToken("begin")
       val END: Parser[String] = kwToken("end")
       val ELSE: Parser[String] = kwToken("else")
@@ -168,7 +168,7 @@ class Parser extends Processor[String, Program, InteractiveSession] {
 
       lazy val KEYWORDS: Set[String] = tokenNames.toSet
 
-      lazy val typeAnnotation: Parser[Type] = AS >> typeDescription
+      lazy val typeAnnotation: Parser[Type] = COLON >> typeDescription
 
       lazy val castType: Parser[Type] = typeDescription
 
@@ -255,7 +255,7 @@ class Parser extends Processor[String, Program, InteractiveSession] {
       }
 
       lazy val dataConstructor: Parser[DataConstructor] = rule {
-        (BAR >> sident) ~ (LPAREN >> ((sident << CL(AS)) ~ typeAnnotation ^^ { case i ~ t => FormalParameter(i, t) }).repeat1By(CL(COMMA)) << RPAREN).? ^^ {
+        (BAR >> sident) ~ (LPAREN >> ((sident << CL(COLON)) ~ typeAnnotation ^^ { case i ~ t => FormalParameter(i, t) }).repeat1By(CL(COMMA)) << RPAREN).? ^^ {
           case name ~ Some(params) => DataConstructor(name, params)
           case name ~ None => DataConstructor(name, Nil)
         }
@@ -390,6 +390,7 @@ class Parser extends Processor[String, Program, InteractiveSession] {
           FunctionCall(location, name, List(self))
       })
 
+
       lazy val castable: Parser[Ast.Node] = rule(primary ~ ((%% << CL(AS)) ~ CL(castType)).? ^^ {
         case target ~ Some((location ~ castType)) => Casting(location, target, castType)
         case target ~ None => target
@@ -409,7 +410,7 @@ class Parser extends Processor[String, Program, InteractiveSession] {
             | functionLiteral
             | predict(
             '%' -> (mapLiteral | setLiteral),
-            '"' -> stringLiteral,
+            '\'' -> stringLiteral,
             '[' -> listLiteral,
             '(' -> (CL(LPAREN) >> expression << RPAREN),
             '{' -> (CL(LBRACE) >> lines << RBRACE)
@@ -435,14 +436,14 @@ class Parser extends Processor[String, Program, InteractiveSession] {
         case location ~ false => BooleanNode(location, false)
       }
 
-      //stringLiteral ::= "\"" ((?!")(\[rntfb"'\\]|[^\\]))* "\""
+      //stringLiteral ::= "\'" ((?!")(\[rntfb'\\]|[^\\]))* "\'"
       lazy val stringLiteral: Parser[Ast.Node] =
-        ("\"" >>
-          (%% ~ """((?!("|#\{))(\\[rntfb"'\\]|[^\\]))+""".r ^^ { case location ~ in =>
+        ("'" >>
+          (%% ~ """((?!('|#\{))(\\[rntfb"'\\]|[^\\]))+""".r ^^ { case location ~ in =>
             StringNode(location, unescape(in))
           } | "#{" >> expression << "}"
             ).*
-          << "\"" ^^ { values =>
+          << "'" ^^ { values =>
           values.foldLeft(StringNode(NoLocation, ""): Ast.Node) { (node, content) => BinaryExpression(content.location, Operator.ADD, node, content) }
         }) << SPACING_WITHOUT_LF
 
@@ -455,7 +456,7 @@ class Parser extends Processor[String, Program, InteractiveSession] {
       })
 
       lazy val mapLiteral: Parser[Ast.Node] = rule(%% ~ (CL(MAP_OPEN) >> commit((CL(expression ~ COLON ~ expression).repeat0By(SEPARATOR) << SEPARATOR.?) << RBRACKET)) ^^ {
-        case location ~ contents => MapLiteral(location, contents.map { case k ~ colon ~ v => (k, v) })
+        case location ~ contents => MapLiteral(location, contents.map { case k ~ _ ~ v => (k, v) })
       })
 
       lazy val fqcn: Parser[String] = (ident ~ (CL(DOT) ~ ident).*) ^^ {

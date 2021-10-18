@@ -129,22 +129,22 @@ class FunctionSpec extends SpecHelper {
   describe("substring") {
     val expectations: List[(String, Value)] = List(
       """
-        |substring("FOO", 0, 1)
+        |substring('FOO', 0, 1)
       """.stripMargin -> ObjectValue("F"),
       """
-        |substring("FOO", 0, 2)
+        |substring('FOO', 0, 2)
       """.stripMargin -> ObjectValue("FO"),
       """
-        |substring("FOO", 0, 3)
+        |substring('FOO', 0, 3)
       """.stripMargin -> ObjectValue("FOO"),
       """
-        |substring("FOO", 1, 1)
+        |substring('FOO', 1, 1)
       """.stripMargin -> ObjectValue(""),
       """
-        |substring("FOO", 1, 2)
+        |substring('FOO', 1, 2)
       """.stripMargin -> ObjectValue("O"),
       """
-        |substring("FOO", 1, 3)
+        |substring('FOO', 1, 3)
       """.stripMargin -> ObjectValue("OO")
     )
 
@@ -157,13 +157,13 @@ class FunctionSpec extends SpecHelper {
   describe("at") {
     val expectations: List[(String, Value)] = List(
       """
-        |at("FOO", 0)
+        |at('FOO', 0)
       """.stripMargin -> ObjectValue("F"),
       """
-        |at("FOO", 1)
+        |at('FOO', 1)
       """.stripMargin -> ObjectValue("O"),
       """
-        |at("FOO", 2)
+        |at('FOO', 2)
       """.stripMargin -> ObjectValue("O")
     )
 
@@ -176,16 +176,16 @@ class FunctionSpec extends SpecHelper {
   describe("matches") {
     val expectations: List[(String, Value)] = List(
       """
-        |matches("FOO", ".*")
+        |matches('FOO', '.*')
       """.stripMargin -> BoxedBoolean(true),
       """
-        |matches("FOO", "FOO")
+        |matches('FOO', 'FOO')
       """.stripMargin -> BoxedBoolean(true),
       """
-        |matches("FOO", "FO")
+        |matches('FOO', 'FO')
       """.stripMargin -> BoxedBoolean(false),
       """
-        |matches("FO", "FOO")
+        |matches('FO', 'FOO')
       """.stripMargin -> BoxedBoolean(false)
     )
 
