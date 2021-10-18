@@ -30,24 +30,24 @@ class CommentSpec extends SpecHelper {
   describe("block comments") {
     it("should be parsed correctly") {
       assertResult(
-        E("""|1 + /* block comment */
+        E("""|1 + (* block comment *)
            |1
         """.stripMargin)
       )(BoxedInt(2))
       assertResult(
-        E("""|1 /* + block comment */
+        E("""|1 (* + block comment *)
            |1
         """.stripMargin)
       )(BoxedInt(1))
       assertResult(
-        E("""|/*/**/*/
+        E("""|(*(**)*)
             |1
         """.stripMargin)
       )(BoxedInt(1))
       assertResult(
-        E("""|1 /* nested
-           |     /* comment */
-           |   here */ + 2
+        E("""|1 (* nested
+           |     (* comment *)
+           |   here *) + 2
         """.stripMargin)
       )(BoxedInt(3))
     }

@@ -301,8 +301,8 @@ Pascar provides two kinds of comment
 ### (Nestable) Block Comment
 
 ```
-1 + /* nested
-  /* comment */ here */ 2 // => 3
+1 + (* nested
+  (* comment */ here *) 2 // => 3
 ```
 
 ### Line comment
