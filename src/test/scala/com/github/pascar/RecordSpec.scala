@@ -13,7 +13,7 @@ class RecordSpec extends SpecHelper {
         |  name : *
         |  age : Int
         |end
-        |#Person("Hoge", 7)
+        |#Person('Hoge', 7)
       """.stripMargin -> RecordValue("Person", List("name" -> ObjectValue("Hoge"), "age" -> BoxedInt(7))),
       """
         |record Tuple<'a, 'b>
@@ -40,7 +40,7 @@ class RecordSpec extends SpecHelper {
         |  name : *
         |  age : Int
         |end
-        |var p = #Person("Hoge", 7)
+        |var p = #Person('Hoge', 7)
         |p.name
       """.stripMargin -> ObjectValue("Hoge"),
       """
@@ -68,7 +68,7 @@ class RecordSpec extends SpecHelper {
           |   name : *
           |   age : Int
           | end
-          | var p = #Person("Hoge", 1.0)
+          | var p = #Person('Hoge', 1.0)
         """.stripMargin
       }
     }

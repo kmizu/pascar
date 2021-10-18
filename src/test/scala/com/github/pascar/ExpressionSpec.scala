@@ -186,11 +186,10 @@ class ExpressionSpec extends SpecHelper {
             """
               |function hello()
               |begin
-              |  "Hello"
-              |  0
+              |  'Hello'
               |end
               |hello()
-            """.stripMargin))(BoxedInt(0))
+            """.stripMargin))(ObjectValue("Hello"))
       }
     }
   }

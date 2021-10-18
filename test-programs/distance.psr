@@ -22,6 +22,6 @@ begin
   sqrt(dx * dx + dy * dy)
 end
 
-var p = #Player(4, 6, "Hero", 50, 10)
-var e = #Enemy(1, 2, "Slime", 5)
+var p = #Player(4, 6, 'Hero', 50, 10)
+var e = #Enemy(1, 2, 'Slime', 5)
 assertResult(5.0)(distance(p, e))
