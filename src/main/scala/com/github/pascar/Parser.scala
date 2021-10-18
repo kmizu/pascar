@@ -56,7 +56,7 @@ class Parser extends Processor[String, Program, InteractiveSession] {
       }
 
       lazy val BLOCK_COMMENT: Parser[Any] = rule {
-        "/*" ~ (not("*/") ~ (BLOCK_COMMENT | ANY)).* ~ "*/"
+        "(*" ~ (not("*)") ~ (BLOCK_COMMENT | ANY)).* ~ "*)"
       }
 
       lazy val LINE_COMMENT: Parser[Any] = rule {

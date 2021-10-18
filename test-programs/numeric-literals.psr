@@ -24,15 +24,15 @@ writeln((-9223372036854775807L)-1L)
 // Double
 writeln(1.0)
 writeln(1.5)
-/* E notation is not supported?
+(* E notation is not supported?
 writeln(1.7976931348623157E308)
 writeln(-1.7976931348623157E308)
-*/
+*)
 
 // Float
 writeln(1.0F)
 writeln(1.5F)
-/* E notation is not supported?
+(* E notation is not supported?
 writeln(3.4028235E38)
 writeln(-3.4028235E38)
-*/
+*)

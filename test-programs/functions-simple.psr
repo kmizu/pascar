@@ -10,7 +10,7 @@ assertResult(2)(multiply(1, 2))
 var division = (x, y) => x / y
 assertResult(1)(division(2, 2))
 
-/* remainder or modulus operator is not supported?
+(* remainder or modulus operator is not supported?
 var reminder(x, y) = x % y
 assertResult(1)(reminder(7, 3))
-*/
+*)
